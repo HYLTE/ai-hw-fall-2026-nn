@@ -19,3 +19,18 @@ python evaluate.py   # test accuracy, confusion matrix -> results/results.md
 ```
 
 Results: [results/results.md](results/results.md)
+
+## Adversarial attacks
+
+White-box, untargeted L∞ attacks on the trained model, run on [0, 1] pixels for ε ∈ {0.1, 0.2, 0.3}.
+Metrics: recognition rate before attacks, and attack success rate (ASR), the fraction of correctly
+classified test images that the attack makes misclassified.
+
+- `attacks.py`: FGSM, I-FGSM / PGD, MI-FGSM
+- `attack_eval.py`: ε sweep over the test set, ASR and accuracy under attack, example images
+
+```sh
+python attack_eval.py   # ~40 min on CPU; --n 1000 for a quick run -> results/attacks.md
+```
+
+Results: [results/attacks.md](results/attacks.md)
