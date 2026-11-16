@@ -6,10 +6,13 @@ from torchvision import datasets
 MEAN, STD = 0.1307, 0.3081  # pixel statistics of the MNIST training set
 
 
-def load_mnist(root, train):
-    """Whole split as normalized tensors: x (N, 1, 28, 28) float, y (N,) int64."""
+def load_mnist(root, train, normalize=True):
+    """Whole split as tensors: x (N, 1, 28, 28) float, y (N,) int64.
+    Pixels are in [0, 1], then mean/std-normalized if `normalize`."""
     ds = datasets.MNIST(root, train=train, download=True)
-    x = (ds.data.float() / 255 - MEAN) / STD
+    x = ds.data.float() / 255
+    if normalize:
+        x = (x - MEAN) / STD
     return TensorDataset(x.unsqueeze(1), ds.targets)
 
 
